@@ -19,17 +19,6 @@ OnRelease = RegisterAction('OnRelease', 'type', 'amount', 'receiver')
 context = GetContext()
 
 
-def get_sender():
-    tx = GetScriptContainer()
-    references = tx.References
-
-    if len(references) > 0:
-        reference = references[0]
-        return reference.ScriptHash
-
-    return ""
-
-
 def get_asset_attachments():
     """
     Gets information about NEO and Gas attached to an invocation TX
@@ -112,16 +101,24 @@ def Main(operation, args):
     trigger = GetTrigger()
 
     if trigger == Verification():
-        print("do verification")
-        return CheckWitness(token_owner)
+        if CheckWitness(token_owner):
+            attachments = get_asset_attachments()
+            if attachments[2] > 0:
+                _type = "neo"
+                amount = attachments[2]
+            elif attachments[3] > 0:
+                _type = "gas"
+                amount = attachments[3]
+            else:
+                return False
+
+            receiver = attachments[0]
+            return release(_type, amount, receiver)
+
+        return False
 
     elif trigger == Application():
-
-        print("do application")
-        print(operation);
-
         if operation == "deposit":
-
             if len(args) != 2 or args[1] == '':
                 return False
 
@@ -132,15 +129,14 @@ def Main(operation, args):
             _type = args[0]
             receiver = args[1]
 
-            if sent_neo > 1:
+            if sent_neo > 0:
                 deposit(_type, sent_neo, receiver)
-            if sent_gas > 1:
+            if sent_gas > 0:
                 deposit(_type, sent_gas, receiver)
 
             return True
 
         elif operation == "release":
-
             if len(args) != 3 or args[0] == '' or args[1] == '' or args[2] <= 0:
                 return False
 
@@ -157,7 +153,6 @@ def Main(operation, args):
             return get_latest_rate(args[0])
 
         elif operation == "updateRate":
-
             if len(args) != 2 or args[0] == '' or args[1] <= 0:
                 return False
 

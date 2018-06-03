@@ -17,6 +17,8 @@
     "loglevel": "^1.6.1",
     "mathjs": "^4.1.0",
     "moment": "^2.20.1",
-    "mongoose": "~4.11.3"
+    "mongoose": "~4.11.3",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3"
   }
 }

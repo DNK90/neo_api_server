@@ -38,7 +38,6 @@ import argparse
 import threading
 from time import sleep
 from logging.handlers import SysLogHandler
-from boa.interop.BigInteger import BigInteger
 import logzero
 from logzero import logger
 
@@ -58,6 +57,7 @@ from neo.api.REST.RestApi import RestApi
 from neo.Network.NodeLeader import NodeLeader
 from neo.Settings import settings, PrivnetConnectionError
 from src.smartcontract import SmartContract
+from src.watcher import Watcher
 
 
 dir_current = os.path.dirname(os.path.abspath(__file__))
@@ -75,82 +75,14 @@ LOGFILE_BACKUP_COUNT = 3  # 3 logfiles history
 # Set the PID file, possible to override with env var PID_FILE
 PID_FILE = os.getenv("PID_FILE", "/tmp/neopython-api-server.pid")
 
+# init watcher
+Watcher.newInstance()
+
 
 def write_pid_file():
     """ Write a pid file, to easily kill the service """
     with open(PID_FILE, "w") as f:
         f.write(str(os.getpid()))
-
-
-# Setup the smart contract instance
-smart_contract = SmartContract()
-
-
-def from_bytes(data):
-    data = list(data)
-    data.reverse()
-    data = bytes(data)
-    return binascii.hexlify(data)
-
-
-def on_event_handler(data):
-    if len(data) != 4:
-        logger.info("OnEventHandler - Invalid data length - %s", data)
-        return
-
-    logger.info(dict(
-        action="OnEventHandler",
-        receiver=from_bytes(data[0]),
-        sender=from_bytes(data[1]),
-        neo=data[2],
-        gas=data[3]
-    ))
-
-
-def on_output_log(data):
-    if len(data) != 3:
-        logger.info("OnOutputLog - Invalid data length - %s", data)
-        return
-
-    logger.info(dict(
-        action="OnOutputLog",
-        scriptHash=data[0],
-        assetId=data[1],
-        value=data[2]
-    ))
-
-
-# Register an event handler for Runtime.Notify events of the smart contract.
-@smart_contract.on_notify
-def sc_notify(event):
-    payload = event.event_payload
-
-    if len(payload) == 0:
-        return
-
-    action = payload[0]
-
-    if action == b'OnEvent':
-        on_event_handler(payload[1:])
-    elif action == b'OutputLog':
-        on_output_log(payload[1:])
-    else:
-        logger.info(event)
-
-
-@smart_contract.on_execution
-def sc_execution(event):
-    logger.info(event)
-
-
-@smart_contract.on_storage
-def sc_storage(event):
-    logger.info(event)
-
-
-@smart_contract.on_log
-def sc_log(msg):
-    logger.info("SmartContract Runtime.Log event: %s", msg)
 
 
 def custom_background_code():
@@ -265,7 +197,6 @@ def main():
 
     # Disable logging smart contract events
     settings.set_log_smart_contract_events(False)
-
     settings.set_log_vm_instruction(True)
 
     # Write a PID file to easily quit the service

@@ -2,6 +2,7 @@ const program = require('commander');
 let updateRate = require('./src/update_rate');
 let getRate = require('./src/get_rate');
 let deposit = require('./src/deposit');
+let release = require('./src/release');
 
 
 function number(val) {
@@ -61,5 +62,13 @@ else if (handler === "deposit") {
 
 }
 else if (handler === "release") {
-	console.log("TBD!");
+	if (releasedType === undefined || amount === undefined || receiver === undefined) {
+		throw("--releasedType, --amount, --receiver are required");
+	}
+
+	if (amount <= 0) {
+		throw("amount must be greater than 0");
+	}
+
+	release(releasedType, receiver, amount);
 }
