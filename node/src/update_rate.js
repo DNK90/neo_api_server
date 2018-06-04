@@ -20,7 +20,7 @@ if amount is 1000 => rate is 1000/Math.pow(10, 8)
 // updateRate("eth", 1000);
 
 module.exports = function(_type, amount) {
-    neonjs.rpc.queryRPC("http://localhost:5000", {
+    neonjs.rpc.queryRPC("http://35.197.153.172:5000", {
         method: "invoke",
         params: [
             contract,
@@ -60,7 +60,7 @@ module.exports = function(_type, amount) {
             let intents = [tx_output];
 
             neonjs.api.doInvoke({
-                url: "http://localhost:5000",
+                url: "http://35.197.153.172:5000",
                 net: net.neoscan,
                 intents: intents,
                 script: result.script,

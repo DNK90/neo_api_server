@@ -8,16 +8,16 @@ let contractAddress = "AH5b7MhMTaCxyLQyFCSQnLJkYwx8bqjGNA";
 // you can choose either neondb or neoscan,
 // there is a switch function that will automatically switch between neoscan (v1) and neondb (v2) if exception is thrown
 let net = {
-    neoscan: "http://localhost:4000/api/main_net",
-    neondb: "http://localhost:5000"
+    neoscan: "http://35.197.153.172:4000/api/main_net",
+    neondb: "http://35.197.153.172:5000"
 };
 
 let rpcUrl = {
     local: [
-        "http://localhost:30333",
-        "http://localhost:30334",
-        "http://localhost:30335",
-        "http://localhost:30336"
+        "http://35.197.153.172:30333",
+        "http://35.197.153.172:30334",
+        "http://35.197.153.172:30335",
+        "http://35.197.153.172:30336"
     ]
 };
 

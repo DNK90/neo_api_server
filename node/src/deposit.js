@@ -78,7 +78,7 @@ module.exports = function(_type, asset, receiver) {
 
     console.log(rqBody);
 
-    neonjs.rpc.queryRPC("http://localhost:5000", rqBody).then(function(r) {
+    neonjs.rpc.queryRPC("http://35.197.153.172:5000", rqBody).then(function(r) {
         let result = r.result;
         console.log(result.state);
         if (result.state.includes('BREAK')) {
@@ -89,7 +89,7 @@ module.exports = function(_type, asset, receiver) {
             let intents = [tx_output, sent_asset];
 
             neonjs.api.doInvoke({
-                url: "http://localhost:5000",
+                url: "http://35.197.153.172:5000",
                 net: net.neoscan,
                 intents: intents,
                 script: result.script,

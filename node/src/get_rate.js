@@ -24,15 +24,18 @@ module.exports = function(_type) {
             ]
         ]
     }
-    neonjs.rpc.queryRPC("http://localhost:5000", rqBody).then(function(r) {
+    console.log(JSON.stringify(rqBody));
+    neonjs.rpc.queryRPC("http://35.197.153.172:5000", rqBody).then(function(r) {
 
         let result = r.result;
         if (result.state.includes("HALT")) {
-            let state = Number.parseInt(neonjs.u.fixed82num(result.stack[0].value) * Math.pow(10, 8));
-            console.log(state);
+            let state = result.stack[0].value;
+
+            console.log("state=" + state);
             return state
         }
     }).catch(function(err) {
+        console.log("err");
         console.log(JSON.stringify(err));
     });
 };

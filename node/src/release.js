@@ -12,10 +12,10 @@ function signTx(tx, publicKey) {
 function sendAsset(idx, data) {
     if (idx < cfg.rpcUrl.local.length) {
         data["url"] = cfg.rpcUrl.local[idx];
-        let weird = ["balance", "fees", "tx", "override", "response"];
-        weird.forEach(function(el) {
-            if (data[el]) delete data[el];
-        });       
+        // let weird = ["balance", "fees", "tx", "override", "response"];
+        // weird.forEach(function(el) {
+        //     if (data[el]) delete data[el];
+        // });       
 
         console.log(JSON.stringify(data));
 
@@ -70,7 +70,7 @@ module.exports = function(_type, toAddress, amount) {
     //     privateKey: account.privateKey,
     //     signingFunction: signTx
     // };
-        url: "http://localhost:30333",
+        url: "http://35.197.153.172:30333",
         net: net.neoscan,
         intents: intents,
         // script: result.script,
