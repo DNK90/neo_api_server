@@ -28,7 +28,7 @@ WORKDIR neo_api_server
 RUN git checkout $branch
 
 # Install the dependencies
-RUN pip3 install -e .
+RUN pip3 install -r requirements.txt
 
 # Example run command
 CMD python3 src/api.py --privnet --port-rpc=$rpc --port-rest=$rest --logfile=$log
