@@ -108,4 +108,4 @@ def on_release(data):
 
 if __name__ == "__main__":
     # deposit("neo", "neo", "AZJKVH86wyfQWGNbnvEFig5TrpR7HEADLw", 15)
-    release("neo", "AZJKVH86wyfQWGNbnvEFig5TrpR7HEADLw", 15)
+    release("neo", "AZJKVH86wyfQWGNbnvEFig5TrpR7HEADLw", "15")

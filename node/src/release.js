@@ -59,14 +59,41 @@ module.exports = function(_type, toAddress, amount) {
         throw("toAddress is empty");
     }
 
+    let intents = neonjs.api.makeIntent(intentArg, toAddress);
+
     let config = {
+    //     net: net.neoscan,
+    //     intents: neonjs.api.makeIntent(intentArg, toAddress),
+    //     address: contractAddress,
+    //     sendingFromSmartContract: true,
+    //     publicKey: account.publicKey,
+    //     privateKey: account.privateKey,
+    //     signingFunction: signTx
+    // };
+        url: "http://localhost:30333",
         net: net.neoscan,
-        intents: neonjs.api.makeIntent(intentArg, toAddress),
+        intents: intents,
+        // script: result.script,
         address: contractAddress,
         sendingFromSmartContract: true,
         publicKey: account.publicKey,
+        signingFunction: signTx,
         privateKey: account.privateKey,
-        signingFunction: signTx
+        fees: 0.1,
+        // gas: 0.1,
+        override: {
+            attributes: [
+                {
+                    data: neonjs.u.hash160(neonjs.wallet.getVerificationScriptFromPublicKey(account.publicKey)),
+                    usage: neonjs.tx.TxAttrUsage.Script
+                }
+            ]
+        }
     };
-    return sendAsset(0, config);
+    // return sendAsset(0, config);
+    neonjs.api.sendAsset(config).then(function(result) {
+        console.log(result);
+    }).catch(function(err) {
+        console.log(err);
+    })
 };
