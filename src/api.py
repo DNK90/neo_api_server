@@ -60,11 +60,17 @@ from src.smartcontract import SmartContract
 from src.watcher import Watcher
 
 
+is_docker = os.getenv("DOCKER", False)
 dir_current = os.path.dirname(os.path.abspath(__file__))
 ROOT_INSTALL_PATH = os.path.abspath(os.path.join(dir_current, ".."))
 FILENAME_SETTINGS_MAINNET = os.path.join(ROOT_INSTALL_PATH, 'src/data/protocol.mainnet.json')
 FILENAME_SETTINGS_TESTNET = os.path.join(ROOT_INSTALL_PATH, 'src/data/protocol.testnet.json')
-FILENAME_SETTINGS_PRIVNET = os.path.join(ROOT_INSTALL_PATH, 'src/data/protocol.privnet.json')
+
+if not is_docker:
+    FILENAME_SETTINGS_PRIVNET = os.path.join(ROOT_INSTALL_PATH, 'src/data/protocol.privnet.json')
+else:
+    FILENAME_SETTINGS_PRIVNET = os.path.join(ROOT_INSTALL_PATH, 'src/data/protocol.privnet.docker.json')
+
 FILENAME_SETTINGS_COZNET = os.path.join(ROOT_INSTALL_PATH, 'src/data/protocol.coz.json')
 
 
