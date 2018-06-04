@@ -29,4 +29,4 @@ RUN git checkout $branch
 RUN pip3 install -r requirements.txt
 
 # Example run command
-CMD PYTHONPATH='.' DOCKER=True python3 src/api.py --privnet --port-rpc=5000 --port-rest=8080 --logfile=$log
+CMD PYTHONPATH='.' python3 src/api.py --config="src/data/protocol.privnet.docker.json" --port-rpc=5000 --port-rest=8080 --logfile=$log

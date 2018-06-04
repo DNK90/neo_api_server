@@ -25,18 +25,6 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-  neo-privnet:
-    image: cityofzion/neo-privatenet
-    container_name: "neo-privnet"
-    ports:
-      - 20333:20333
-      - 20334:20334
-      - 20335:20335
-      - 20336:20336
-      - 30333:30333
-      - 30334:30334
-      - 30335:30335
-      - 30336:30336
   neo-api-server:
     image: phucnguyenit/kardia-neo-watcher
     container_name: "neo-api-server"
@@ -53,3 +41,15 @@ services:
       - neo-privnet:30336
     depends_on:
       - neo-privnet
+  neo-privnet:
+    image: cityofzion/neo-privatenet
+    container_name: "neo-privnet"
+    ports:
+      - 20333:20333
+      - 20334:20334
+      - 20335:20335
+      - 20336:20336
+      - 30333:30333
+      - 30334:30334
+      - 30335:30335
+      - 30336:30336
