@@ -42,3 +42,14 @@ services:
     container_name: "neo-api-server"
     ports:
       - 5000:5000
+    links:
+      - neo-privnet:20333
+      - neo-privnet:20334
+      - neo-privnet:20335
+      - neo-privnet:20336
+      - neo-privnet:30333
+      - neo-privnet:30334
+      - neo-privnet:30335
+      - neo-privnet:30336
+    depends_on:
+      - neo-privnet
