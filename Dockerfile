@@ -1,5 +1,8 @@
 FROM ubuntu:17.10
 
+RUN apt-get install --yes curl
+RUN curl --silent --location https://deb.nodesource.com/setup_4.x | sudo bash -
+
 # Install dependencies
 RUN apt-get update && apt-get install -y \
     wget \
@@ -9,6 +12,7 @@ RUN apt-get update && apt-get install -y \
     python3.6-venv \
     python3-pip \
     nodejs \
+    build-essential \
     libleveldb-dev \
     libssl-dev \
     vim \
