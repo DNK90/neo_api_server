@@ -1,0 +1,114 @@
+[
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "x",
+        "type": "bytes32"
+      }
+    ],
+    "name": "bytes32ToString",
+    "outputs": [
+      {
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "callerAdd",
+        "type": "address"
+      },
+      {
+        "name": "calleeAdd",
+        "type": "address"
+      },
+      {
+        "name": "eventName",
+        "type": "bytes32"
+      },
+      {
+        "name": "params",
+        "type": "uint256"
+      },
+      {
+        "name": "tokenType",
+        "type": "uint256"
+      }
+    ],
+    "name": "repeatEvent",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "childSmc",
+        "type": "address"
+      },
+      {
+        "name": "receiveAddress",
+        "type": "address"
+      },
+      {
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "name": "tokenType",
+        "type": "uint256"
+      }
+    ],
+    "name": "forwardEvent",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "childSmc",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "name": "caller",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "name": "calleeAdd",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "name": "eventName",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "name": "value",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "name": "tokenType",
+        "type": "uint256"
+      }
+    ],
+    "name": "onEventCalled",
+    "type": "event"
+  }
+]

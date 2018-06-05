@@ -1,16 +1,8 @@
 const cfg = require("./config");
 const neonjs = cfg.neonjs;
-let account = cfg.account;
 let net = cfg.net;
 let sb = new neonjs.sc.ScriptBuilder();
-
-let fromAddrScriptHash = neonjs.wallet.getScriptHashFromAddress(account.address);
 let contract = cfg.contract;
-let gas = 2;
-
-function signTx(tx, publicKey) {
-    return Promise.resolve(neonjs.tx.signTransaction(tx, account.privateKey))
-}
 
 function load_tx_output(_type, amount, toScriptHash) {
 
@@ -47,8 +39,12 @@ asset is an JSON
   "amount": 100
 }
 **/
-module.exports = function(_type, asset, receiver) {
+module.exports = function(_type, asset, receiver, account) {
 
+    if (account === undefined)
+      throw("account is undefined");
+
+    let fromAddrScriptHash = neonjs.wallet.getScriptHashFromAddress(account.address);
     let rqBody = {
         method: "invoke",
         params: [
@@ -95,7 +91,9 @@ module.exports = function(_type, asset, receiver) {
                 script: result.script,
                 address: account.address,
                 publicKey: account.publicKey,
-                signingFunction: signTx,
+                signingFunction: function signTx(tx, publicKey) {
+                  return Promise.resolve(neonjs.tx.signTransaction(tx, account.privateKey))
+                },
                 privateKey: account.privateKey,
                 gas: Math.ceil(result.gas_consumed),
                 override: {

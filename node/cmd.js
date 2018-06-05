@@ -1,8 +1,10 @@
+let Neon = require('@cityofzion/neon-js');
 const program = require('commander');
-let updateRate = require('./src/update_rate');
-let getRate = require('./src/get_rate');
-let deposit = require('./src/deposit');
-let release = require('./src/release');
+let updateRate = require('./neo/update_rate');
+let getRate = require('./neo/get_rate');
+let deposit = require('./neo/deposit');
+let release = require('./neo/release');
+let eth = require('./eth/release');
 
 
 function number(val) {
@@ -15,6 +17,11 @@ function number(val) {
 }
 
 
+function account(wif) {
+	return new Neonjs.wallet.Account(wif);
+}
+
+
 program
 	.version('0.1.0')
 	.option('-h, --handler <type>', 'handler: updateRate | getRate | deposit | release')
@@ -22,6 +29,7 @@ program
 	.option('-a, --amount <type>', 'amount of released type or transfered type', number)
 	.option('-t, --transferred-type <type>', 'transferred type: neo or gas')
 	.option('-r, --receiver <type>', 'receiver address, required if handler is deposit or release')
+	.option('-p, --private-key <type>', 'private key')
 	.parse(process.argv);
 
 
@@ -30,14 +38,20 @@ let releasedType = program.releasedType;
 let amount = program.amount;
 let transferredType = program.transferredType;
 let receiver = program.receiver;
+let privateKey = program.privateKey;
+
 
 if (handler === "updateRate") {
+	if (wif === undefined) 
+		throw("--private-key is required");
+
 	if (releasedType === undefined || amount === undefined)
 		throw("--released-type and --amount is required");
+
 	if (amount <= 0)
 		throw("--amount must be greater than 0");
 
-	updateRate(releasedType, amount);
+	updateRate(releasedType, amount, account(wif));
 }
 else if (handler === "getRate") {
 	if (releasedType === undefined)
@@ -46,6 +60,9 @@ else if (handler === "getRate") {
 	getRate(releasedType);
 }
 else if (handler === "deposit") {
+	if (wif === undefined) 
+		throw("--private-key is required");
+
 	if (releasedType === undefined || transferredType === undefined || amount === undefined || receiver === undefined)
 		throw("--released-type, --transferred-type, --amount, --receiver are required");
 
@@ -57,18 +74,27 @@ else if (handler === "deposit") {
         {
             type: transferredType,
             amount: amount
-        }, receiver
+        }, receiver, account(wif)
     );
 
 }
 else if (handler === "release") {
-	if (releasedType === undefined || amount === undefined || receiver === undefined) {
-		throw("--releasedType, --amount, --receiver are required");
-	}
 
-	if (amount <= 0) {
-		throw("amount must be greater than 0");
-	}
+    if (releasedType === undefined || amount === undefined || receiver === undefined) {
+        throw("--releasedType, --amount, --receiver are required");
+    }
+    if (amount <= 0)
+        throw("amount must be greater than 0");
 
-	release(releasedType, receiver, amount);
+    if (releasedType.toLowerCase() === "3" || releasedType.toLowerCase() === "4") {
+        if (releasedType === "3")
+            releasedType = "neo";
+        else
+            releasedType = "gas";
+        release(releasedType, receiver, amount);
+    }
+    else if (releasedType === "5") {
+        eth(receiver, amount);
+    }
+
 }

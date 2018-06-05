@@ -1,15 +1,8 @@
 const cfg = require("./config");
 const neonjs = cfg.neonjs;
-let account = cfg.account;
 let net = cfg.net;
-
-let fromAddrScriptHash = neonjs.wallet.getScriptHashFromAddress(account.address);
 let contract = cfg.contract;
 let gas = 2;
-
-function signTx(tx, publicKey) {
-    return Promise.resolve(neonjs.tx.signTransaction(tx, account.privateKey))
-}
 
 
 /**
@@ -19,7 +12,13 @@ if amount is 1000 => rate is 1000/Math.pow(10, 8)
 **/
 // updateRate("eth", 1000);
 
-module.exports = function(_type, amount) {
+module.exports = function(_type, amount, account) {
+
+    if (account === undefined)
+      throw("account is undefined");
+
+    let fromAddrScriptHash = neonjs.wallet.getScriptHashFromAddress(account.address);
+
     neonjs.rpc.queryRPC("http://35.197.153.172:5000", {
         method: "invoke",
         params: [
@@ -66,7 +65,9 @@ module.exports = function(_type, amount) {
                 script: result.script,
                 address: account.address,
                 publicKey: account.publicKey,
-                signingFunction: signTx,
+                signingFunction: function signTx(tx, publicKey) {
+                  return Promise.resolve(neonjs.tx.signTransaction(tx, account.privateKey))
+                },
                 privateKey: account.privateKey,
                 gas: Math.ceil(result.gas_consumed),
                 override: {

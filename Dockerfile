@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y \
     python3.6-dev \
     python3.6-venv \
     python3-pip \
+    nodejs \
     libleveldb-dev \
     libssl-dev \
     vim \
@@ -24,9 +25,14 @@ ARG log=log.txt
 RUN git clone https://github.com/DNK90/neo_api_server.git
 WORKDIR neo_api_server
 RUN git checkout $branch
+CMD git pull
 
 # Install the dependencies
-RUN pip3 install -r requirements.txt
+
+CMD pip3 install -r requirements.txt
+CMD cd node
+CMD npm install
+CMD cd ..
 
 # Example run command
 CMD PYTHONPATH='.' python3 src/api.py --config="src/data/protocol.privnet.docker.json" --port-rpc=5000 --port-rest=8080 --logfile=$log
