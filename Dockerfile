@@ -25,14 +25,7 @@ ARG log=log.txt
 RUN git clone https://github.com/DNK90/neo_api_server.git
 WORKDIR neo_api_server
 RUN git checkout $branch
-CMD git pull
-
-# Install the dependencies
-
-CMD pip3 install -r requirements.txt
-CMD cd node
-CMD npm install
-CMD cd ..
+CMD ["sh", "-c", "git pull && pip3 install -r requirements.txt && cd node && npm install && cd .. && PYTHONPATH='.' python3 src/api.py --config="src/data/protocol.privnet.docker.json" --port-rpc=5000 --port-rest=8080 --logfile=$log"]
 
 # Example run command
 CMD PYTHONPATH='.' python3 src/api.py --config="src/data/protocol.privnet.docker.json" --port-rpc=5000 --port-rest=8080 --logfile=$log
