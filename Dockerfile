@@ -1,10 +1,9 @@
 FROM ubuntu:17.10
 
-RUN apt-get install --yes curl
-RUN curl --silent --location https://deb.nodesource.com/setup_4.x | sudo bash -
-
 # Install dependencies
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && install -y curl && \
+    curl --silent --location https://deb.nodesource.com/setup_4.x | sudo bash - \
+    && apt-get install -y \
     wget \
     git-core \
     python3.6 \
