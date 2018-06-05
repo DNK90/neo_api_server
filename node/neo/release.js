@@ -17,10 +17,10 @@ module.exports = function(_type, toAddress, amount) {
         throw("amount must be greater than 0");
     }
 
-    if (_type.toLowerCase() === "neo")
-        intentArg["NEO"] = amount;
-    else if (_type.toLowerCase() === "gas")
+    if (_type.toLowerCase() === "3")
         intentArg["GAS"] = amount;
+    else if (_type.toLowerCase() === "4")
+        intentArg["NEO"] = amount;
     else
         throw("Invalid type");
 

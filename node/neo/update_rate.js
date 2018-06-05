@@ -2,7 +2,6 @@ const cfg = require("./config");
 const neonjs = cfg.neonjs;
 let net = cfg.net;
 let contract = cfg.contract;
-let gas = 2;
 
 
 /**
@@ -13,6 +12,9 @@ if amount is 1000 => rate is 1000/Math.pow(10, 8)
 // updateRate("eth", 1000);
 
 module.exports = function(_type, amount, account) {
+
+    if (cfg.validType.indexOf(_type) === -1)
+        throw("Invalid type");
 
     if (account === undefined)
       throw("account is undefined");

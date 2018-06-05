@@ -6,6 +6,9 @@ let contract = cfg.contract;
 
 function load_tx_output(_type, amount, toScriptHash) {
 
+  if (_type !== "3" && _type !== "4")
+      throw("invalid type")
+
   console.log("type of amount: " + typeof(amount));
   console.log(amount);
 
@@ -19,8 +22,8 @@ function load_tx_output(_type, amount, toScriptHash) {
 
   let assetId = "";
   switch(_type.toLowerCase()) {
-    case "gas": assetId = neonjs.CONST.ASSET_ID.GAS; break;
-    case "neo":
+    case "3": assetId = neonjs.CONST.ASSET_ID.GAS; break;
+    case "4":
     default: assetId = neonjs.CONST.ASSET_ID.NEO
   }
 

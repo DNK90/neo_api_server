@@ -29,8 +29,6 @@ class Watcher:
             action = payload[0]
 
             if action == b'OnDeposit':
-                on_deposit(payload[1:])
-            elif action == b'OnRelease':
                 on_release(payload[1:])
 
         @smart_contract.on_execution
@@ -46,7 +44,7 @@ class Watcher:
             logger.info("SmartContract Runtime.Log event: %s", msg)
 
 
-def on_deposit(data):
+def on_release(data):
     if len(data) != 4:
         logger.info("OnDeposit - Invalid data length - %s", data)
 
@@ -57,7 +55,7 @@ def on_deposit(data):
     to_transfer = amount * rate
     logger.info("OnDeposit - toTransfer - {}".format(to_transfer))
 
-    if _type.lower() in [b"neo", b"gas"]:
+    if _type.lower() in [b"3", b"4", b"5"]:
 
         subprocess.call([
             "node",
@@ -68,44 +66,3 @@ def on_deposit(data):
             "--receiver={}".format(receiver.decode('utf-8'))
         ])
 
-    else:
-        print("call another API")
-
-
-def deposit(transferred_type, released_type, receiver, amount):
-    subprocess.call([
-        "node",
-        COMMAND,
-        "--handler=deposit",
-        "--released-type={}".format(released_type),
-        "--receiver={}".format(receiver),
-        "--transferred-type={}".format(transferred_type),
-        "--amount={}".format(amount)
-    ])
-
-
-def release(_type, receiver, amount):
-    subprocess.call([
-        "node",
-        COMMAND,
-        "--handler=release",
-        "--released-type={}".format(_type),
-        "--amount={}".format(amount),
-        "--receiver={}".format(receiver)
-    ])
-
-
-def on_release(data):
-    if len(data) != 4:
-        logger.info("OnRelease - Invalid data length - %s", data)
-
-    _type = data[0].decode("utf-8")
-    amount = data[1] / (10**8)
-    receiver = data[2].decode("utf-8")
-
-    logger.info("{} has been received {} {}".format(receiver, amount, _type))
-
-
-if __name__ == "__main__":
-    # deposit("neo", "neo", "AZJKVH86wyfQWGNbnvEFig5TrpR7HEADLw", 15)
-    release("neo", "AZJKVH86wyfQWGNbnvEFig5TrpR7HEADLw", "15")
