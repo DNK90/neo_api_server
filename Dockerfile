@@ -2,7 +2,7 @@ FROM ubuntu:17.10
 
 # Install dependencies
 RUN apt-get update && apt-get install -y curl && \
-    curl --silent --location https://deb.nodesource.com/setup_4.x | sudo bash - && \
+    curl --silent --location https://deb.nodesource.com/setup_9.x | bash - && \
     apt-get install -y \
     wget \
     git-core \
