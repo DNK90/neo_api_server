@@ -7,7 +7,7 @@ const PRIVATE_KEY =
     '0xb0b8b5a8199891fe81d9b830effdd9fc50dbfa3522fa15d20c5074c99b41b3bc';
 const CHILD_SMC_ADDRESS = '0x65b3d058feb40f68c5c11f1372121fba31964c89';
 
-const providerHTTP = 'http://35.198.237.94:8545';
+const providerHTTP = 'http://35.198.245.107:8545';
 
 module.exports = async (to, amount) => {
     let web3 = new Web3(providerHTTP);
@@ -17,7 +17,7 @@ module.exports = async (to, amount) => {
     let tx = {
         from: MAIN_ACCOUNT,
         to: SMC_ADDRESS,
-        gas: 26811,
+        gas: 40000,
         data: encodedABI
     };
 
