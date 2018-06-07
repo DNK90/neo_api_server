@@ -1,4 +1,5 @@
-const cfg = require("./config");
+const util = require("./util");
+const cfg = util.load_env();
 const neonjs = cfg.neonjs;
 let net = cfg.net;
 let contract = cfg.contract;
@@ -21,7 +22,7 @@ module.exports = function(_type, amount, account) {
 
     let fromAddrScriptHash = neonjs.wallet.getScriptHashFromAddress(account.address);
 
-    neonjs.rpc.queryRPC("http://35.197.153.172:5000", {
+    neonjs.rpc.queryRPC(cfg.pythonRPC, {
         method: "invoke",
         params: [
             contract,
@@ -61,7 +62,7 @@ module.exports = function(_type, amount, account) {
             let intents = [tx_output];
 
             neonjs.api.doInvoke({
-                url: "http://35.197.153.172:5000",
+                url: cfg.pythonRPC,
                 net: net.neoscan,
                 intents: intents,
                 script: result.script,

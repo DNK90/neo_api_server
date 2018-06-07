@@ -1,10 +1,11 @@
 let Neon = require('@cityofzion/neon-js');
-const program = require('commander');
+let program = require('commander');
 let updateRate = require('./neo/update_rate');
 let getRate = require('./neo/get_rate');
 let deposit = require('./neo/deposit');
 let release = require('./neo/release');
 let eth = require('./eth/release');
+let util = require('./neo/util');
 
 
 function number(val) {
@@ -18,7 +19,7 @@ function number(val) {
 
 
 function account(wif) {
-	return new Neonjs.wallet.Account(wif);
+	return new Neon.wallet.Account(wif);
 }
 
 
@@ -39,10 +40,11 @@ let amount = program.amount;
 let transferredType = program.transferredType;
 let receiver = program.receiver;
 let privateKey = program.privateKey;
+let cfg = util.load_env();
 
 
 if (handler === "updateRate") {
-	if (wif === undefined) 
+	if (privateKey === undefined)
 		throw("--private-key is required");
 
 	if (releasedType === undefined || amount === undefined)
@@ -51,7 +53,7 @@ if (handler === "updateRate") {
 	if (amount <= 0)
 		throw("--amount must be greater than 0");
 
-	updateRate(releasedType, amount, account(wif));
+	updateRate(releasedType, amount, account(privateKey));
 }
 else if (handler === "getRate") {
 	if (releasedType === undefined)
@@ -60,21 +62,18 @@ else if (handler === "getRate") {
 	getRate(releasedType);
 }
 else if (handler === "deposit") {
-	if (wif === undefined) 
+	if (privateKey === undefined)
 		throw("--private-key is required");
 
 	if (releasedType === undefined || transferredType === undefined || amount === undefined || receiver === undefined)
 		throw("--released-type, --transferred-type, --amount, --receiver are required");
-
-	if (transferredType.toLowerCase() !== "neo" && transferredType.toLowerCase() !== "gas")
-		throw("--transferred-type must be neo or gas");
 
 	deposit(
         releasedType,
         {
             type: transferredType,
             amount: amount
-        }, receiver, account(wif)
+        }, receiver, account(privateKey)
     );
 
 }
@@ -86,14 +85,10 @@ else if (handler === "release") {
     if (amount <= 0)
         throw("amount must be greater than 0");
 
-    if (releasedType.toLowerCase() === "3" || releasedType.toLowerCase() === "4") {
-        if (releasedType === "3")
-            releasedType = "neo";
-        else
-            releasedType = "gas";
+    if (releasedType.toLowerCase() === cfg.NEO || releasedType.toLowerCase() === cfg.GAS) {
         release(releasedType, receiver, amount);
     }
-    else if (releasedType === "5") {
+    else if (releasedType === cfg.KAI) {
         eth(receiver, amount);
     }
 

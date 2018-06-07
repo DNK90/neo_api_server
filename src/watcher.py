@@ -58,6 +58,7 @@ def on_release(data):
     if _type.lower() in [b"3", b"4", b"5"]:
 
         subprocess.call([
+            "DOCKER=true",
             "node",
             COMMAND,
             "--handler=release",

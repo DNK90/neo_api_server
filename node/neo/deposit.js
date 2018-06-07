@@ -1,4 +1,4 @@
-const cfg = require("./config");
+const cfg = require("./util").load_env();
 const neonjs = cfg.neonjs;
 let net = cfg.net;
 let sb = new neonjs.sc.ScriptBuilder();
@@ -6,8 +6,8 @@ let contract = cfg.contract;
 
 function load_tx_output(_type, amount, toScriptHash) {
 
-  if (_type !== "3" && _type !== "4")
-      throw("invalid type")
+  if (_type !== cfg.NEO && _type !== cfg.GAS)
+      throw("invalid type");
 
   console.log("type of amount: " + typeof(amount));
   console.log(amount);
@@ -22,8 +22,8 @@ function load_tx_output(_type, amount, toScriptHash) {
 
   let assetId = "";
   switch(_type.toLowerCase()) {
-    case "3": assetId = neonjs.CONST.ASSET_ID.GAS; break;
-    case "4":
+    case cfg.GAS: assetId = neonjs.CONST.ASSET_ID.GAS; break;
+    case cfg.NEO:
     default: assetId = neonjs.CONST.ASSET_ID.NEO
   }
 
@@ -31,7 +31,7 @@ function load_tx_output(_type, amount, toScriptHash) {
     assetId: assetId,
     scriptHash: toScriptHash,
     value: new neonjs.u.Fixed8(amount)
-  });
+  })
 }
 
 
@@ -75,9 +75,9 @@ module.exports = function(_type, asset, receiver, account) {
         ]
     };
 
-    console.log(rqBody);
+    console.log(JSON.stringify(rqBody));
 
-    neonjs.rpc.queryRPC("http://35.197.153.172:5000", rqBody).then(function(r) {
+    neonjs.rpc.queryRPC(cfg.pythonRPC, rqBody).then(function(r) {
         let result = r.result;
         console.log(result.state);
         if (result.state.includes('BREAK')) {
@@ -88,7 +88,7 @@ module.exports = function(_type, asset, receiver, account) {
             let intents = [tx_output, sent_asset];
 
             neonjs.api.doInvoke({
-                url: "http://35.197.153.172:5000",
+                url: cfg.pythonRPC,
                 net: net.neoscan,
                 intents: intents,
                 script: result.script,
@@ -99,6 +99,7 @@ module.exports = function(_type, asset, receiver, account) {
                 },
                 privateKey: account.privateKey,
                 gas: Math.ceil(result.gas_consumed),
+                fees: 0.1,
                 override: {
                     attributes: [
                         {

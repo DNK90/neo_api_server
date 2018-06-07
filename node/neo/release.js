@@ -1,4 +1,5 @@
-const cfg = require('./config');
+const util = require('./util');
+const cfg = util.load_env();
 let neonjs = cfg.neonjs;
 let contractAddress = cfg.contractAddress;
 let net = cfg.net;
@@ -17,9 +18,9 @@ module.exports = function(_type, toAddress, amount) {
         throw("amount must be greater than 0");
     }
 
-    if (_type.toLowerCase() === "3")
+    if (_type.toLowerCase() === cfg.GAS)
         intentArg["GAS"] = amount;
-    else if (_type.toLowerCase() === "4")
+    else if (_type.toLowerCase() === cfg.NEO)
         intentArg["NEO"] = amount;
     else
         throw("Invalid type");
@@ -31,7 +32,7 @@ module.exports = function(_type, toAddress, amount) {
     let intents = neonjs.api.makeIntent(intentArg, toAddress);
 
     let config = {
-        url: "http://35.197.153.172:30333",
+        url: cfg.rpcUrl[0],
         net: net.neoscan,
         intents: intents,
         address: contractAddress,
