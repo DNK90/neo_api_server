@@ -53,7 +53,7 @@ def on_release(data):
     receiver = data[2]
     rate = BigInteger.FromBytes(data[3]) / (10**8)
     to_transfer = amount * rate
-    logger.info("OnDeposit - toTransfer - {}".format(to_transfer))
+    logger.info("OnDeposit - toTransfer - {}*{}={}".format(amount, rate, to_transfer))
 
     if _type.lower() in [b"3", b"4", b"5"]:
 
