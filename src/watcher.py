@@ -45,8 +45,10 @@ class Watcher:
 
 
 def on_release(data):
+    logger.info("OnDeposit - On Release - {}".format(data))
+
     if len(data) != 4:
-        logger.info("OnDeposit - Invalid data length - %s", data)
+        logger.info("OnDeposit - Invalid data length - {}".format(data))
 
     _type = data[0]
     amount = data[1] / (10**8)

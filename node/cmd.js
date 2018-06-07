@@ -98,7 +98,7 @@ else if (handler === "release") {
         release(releasedType, receiver, amount);
     }
     else if (releasedType === cfg.KAI) {
-        eth(receiver, amount);
+        eth(receiver, amount * Math.pow(10, 18));
     }
 
 }
