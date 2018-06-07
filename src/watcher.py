@@ -51,7 +51,9 @@ def on_release(data):
     _type = data[0]
     amount = data[1] / (10**8)
     receiver = data[2]
-    rate = BigInteger.FromBytes(data[3]) / (10**8)
+
+    # convert back to int - BigInteger does not allow mul to a float number
+    rate = int(BigInteger.FromBytes(data[3])) * 1.0 / (10**8)
     to_transfer = amount * rate
     logger.info("OnDeposit - toTransfer - {}*{}={}".format(amount, rate, to_transfer))
 
