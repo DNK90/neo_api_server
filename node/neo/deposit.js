@@ -83,7 +83,7 @@ module.exports = function(_type, asset, receiver, account) {
 
             console.log(result.script);
             let tx_output = load_tx_output(cfg.GAS, result.gas_consumed, fromAddrScriptHash);
-            let sent_asset = load_tx_output(asset.type, asset.amount, contract);
+            let sent_asset = load_tx_output(asset.type, asset.amount / Math.pow(10, 8), contract);
             let intents = [tx_output, sent_asset];
 
             neonjs.api.doInvoke({
