@@ -31,6 +31,7 @@ program
 	.option('-t, --transferred-type <type>', 'transferred type: neo or gas')
 	.option('-r, --receiver <type>', 'receiver address, required if handler is deposit or release')
 	.option('-p, --private-key <type>', 'private key')
+    .option('-env, --environment <type>', 'override environment dev or docker')
 	.parse(process.argv);
 
 
@@ -40,6 +41,14 @@ let amount = program.amount;
 let transferredType = program.transferredType;
 let receiver = program.receiver;
 let privateKey = program.privateKey;
+
+if (program.enviroment) {
+    if (program.enviroment.toLowerCase() === "docker")
+        process.env["DOCKER"] = true;
+    else if (program.enviroment.toLowerCase() === "dev")
+        process.env["DOCKER"] = false;
+}
+
 let cfg = util.load_env();
 
 

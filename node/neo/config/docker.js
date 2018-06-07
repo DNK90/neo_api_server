@@ -27,13 +27,13 @@ module.exports = {
     account: account,
     net: net,
     rpcUrl: rpcUrl,
-    pythonRPC: 'localhost:5000',
+    pythonRPC: 'http://localhost:5000',
     contract: contract,
     contractAddress: contractAddress,
     retry: 5,
     validType: validType,
-    NEO: 3,
-    GAS: 4,
-    KAI: 5
+    NEO: "3",
+    GAS: "4",
+    KAI: "5"
 };
 

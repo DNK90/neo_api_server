@@ -1,13 +1,9 @@
 const cfg = require("./util").load_env();
 const neonjs = cfg.neonjs;
 let net = cfg.net;
-let sb = new neonjs.sc.ScriptBuilder();
 let contract = cfg.contract;
 
 function load_tx_output(_type, amount, toScriptHash) {
-
-  if (_type !== cfg.NEO && _type !== cfg.GAS)
-      throw("invalid type");
 
   console.log("type of amount: " + typeof(amount));
   console.log(amount);
@@ -21,11 +17,14 @@ function load_tx_output(_type, amount, toScriptHash) {
   }
 
   let assetId = "";
-  switch(_type.toLowerCase()) {
-    case cfg.GAS: assetId = neonjs.CONST.ASSET_ID.GAS; break;
-    case cfg.NEO:
-    default: assetId = neonjs.CONST.ASSET_ID.NEO
+  if (_type === cfg.GAS) {
+      assetId = neonjs.CONST.ASSET_ID.GAS;
   }
+  else if (_type === cfg.NEO) {
+      assetId = neonjs.CONST.ASSET_ID.NEO;
+  }
+  else
+      throw("invalid type");
 
   return new neonjs.tx.TransactionOutput({
     assetId: assetId,
@@ -83,7 +82,7 @@ module.exports = function(_type, asset, receiver, account) {
         if (result.state.includes('BREAK')) {
 
             console.log(result.script);
-            let tx_output = load_tx_output("gas", result.gas_consumed, fromAddrScriptHash);
+            let tx_output = load_tx_output(cfg.GAS, result.gas_consumed, fromAddrScriptHash);
             let sent_asset = load_tx_output(asset.type, asset.amount, contract);
             let intents = [tx_output, sent_asset];
 
@@ -99,7 +98,6 @@ module.exports = function(_type, asset, receiver, account) {
                 },
                 privateKey: account.privateKey,
                 gas: Math.ceil(result.gas_consumed),
-                fees: 0.1,
                 override: {
                     attributes: [
                         {
