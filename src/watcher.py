@@ -51,7 +51,7 @@ def on_release(data):
         logger.info("OnDeposit - Invalid data length - {}".format(data))
 
     _type = data[0]
-    amount = data[1] / (10**8)
+    amount = int(data[1]) / (10**8)
     receiver = data[2]
 
     rate = int.from_bytes(data[3], 'little') * 1.0 / (10**8)
