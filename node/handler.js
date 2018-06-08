@@ -1,5 +1,4 @@
 let Neon = require('@cityofzion/neon-js');
-let program = require('commander');
 let updateRate = require('./neo/update_rate');
 let getRate = require('./neo/get_rate');
 let deposit = require('./neo/deposit');
