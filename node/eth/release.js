@@ -5,7 +5,7 @@ const ABI_DEFINITION = require('./Master.json');
 
 const PRIVATE_KEY =
     '0xb0b8b5a8199891fe81d9b830effdd9fc50dbfa3522fa15d20c5074c99b41b3bc';
-const CHILD_SMC_ADDRESS = '0x65b3d058feb40f68c5c11f1372121fba31964c89';
+const CHILD_SMC_ADDRESS = '0xd43ea9c9bd081c005f7daf0d4e987201dd61713e';
 
 const providerHTTP = 'http://35.198.245.107:8545';
 
