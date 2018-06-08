@@ -2,7 +2,7 @@ import os
 import subprocess
 from logzero import logger
 from src.smartcontract import SmartContract
-from boa.interop.BigInteger import BigInteger
+from neo.Core.Blockchain import Blockchain
 
 
 dir_current = os.path.dirname(os.path.abspath(__file__))
@@ -20,6 +20,12 @@ class Watcher:
         # Register an event handler for Runtime.Notify events of the smart contract.
         @smart_contract.on_notify
         def sc_notify(event):
+            block_number = event.block_number
+            latest_block_number = Blockchain.Default().HeaderHeight + 1
+
+            if block_number < latest_block_number:
+                return
+
             payload = event.event_payload
             logger.info(event)
 
@@ -69,4 +75,5 @@ def on_release(data):
             "--receiver={}".format(receiver.decode('utf-8')),
             "--environment=docker"
         ])
+
 
