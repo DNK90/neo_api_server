@@ -23,7 +23,7 @@ class Watcher:
             block_number = event.block_number
             latest_block_number = Blockchain.Default().HeaderHeight + 1
 
-            if block_number < latest_block_number:
+            if block_number < latest_block_number - 10:
                 return
 
             payload = event.event_payload
