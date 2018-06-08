@@ -7,16 +7,6 @@ let eth = require('./eth/release');
 let util = require('./neo/util');
 
 
-function number(val) {
-	console.log(val);
-	if (isNaN(parseFloat(val))) 
-		throw("amount must be a number");
-
-	else
-		return parseFloat(val);
-}
-
-
 function account(wif) {
 	return new Neon.wallet.Account(wif);
 }

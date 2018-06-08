@@ -1,6 +1,17 @@
 let program = require('commander');
 let handler = require('./handler');
 
+
+function number(val) {
+    console.log(val);
+    if (isNaN(parseFloat(val)))
+        throw("amount must be a number");
+
+    else
+        return parseFloat(val);
+}
+
+
 program
 	.version('0.1.0')
 	.option('-h, --handler <type>', 'handler: updateRate | getRate | deposit | release')
