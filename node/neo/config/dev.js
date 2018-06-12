@@ -4,7 +4,7 @@ let WIF_KEY = "KxDgvEKzgSBPPfuVfw67oPQBSjidEiqTHURKSDL1R7yGaGYAeYnr";
 let account = new neonjs.wallet.Account(WIF_KEY);
 let contract = "56825a1bb0a83b179f68ded8eb942a350ccf510e";
 let contractAddress = "AH5b7MhMTaCxyLQyFCSQnLJkYwx8bqjGNA";
-let validType = ["3", "4", "5"];
+let validType = ["1", "3", "4", "5"];
 
 // you can choose either neondb or neoscan,
 // there is a switch function that will automatically switch between neoscan (v1) and neondb (v2) if exception is thrown
