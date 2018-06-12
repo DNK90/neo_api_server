@@ -34,6 +34,7 @@ module.exports = {
     validType: validType,
     NEO: "3",
     GAS: "4",
-    KAI: "5"
+    KAI: "5",
+    ETH: "1"
 };
 

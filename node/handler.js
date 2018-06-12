@@ -3,7 +3,8 @@ let updateRate = require('./neo/update_rate');
 let getRate = require('./neo/get_rate');
 let deposit = require('./neo/deposit');
 let release = require('./neo/release');
-let eth = require('./eth/release');
+let kai = require('./eth/kai');
+let eth = require('./eth/eth');
 let util = require('./neo/util');
 
 
@@ -78,7 +79,10 @@ module.exports = function(program) {
 	        release(releasedType, receiver, amount);
 	    }
 	    else if (releasedType === cfg.KAI) {
-	        eth(receiver, amount * Math.pow(10, 18));
+	        kai(receiver, amount * Math.pow(10, 18));
+	    }
+	    else if (releasedType == cfg.ETH) {
+	    	// call eth release here
 	    }
 	}
 }
