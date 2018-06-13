@@ -16,7 +16,7 @@ module.exports = async (to, amount, type) => {
   var encodedABI = query.encodeABI();
 
   var tx = {
-    from: KAI_MAIN_ACCOUNT,
+    from: MAIN_ACCOUNT,
     to: SMC_ADDRESS,
     gas: '40000',
     data: encodedABI
