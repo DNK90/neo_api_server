@@ -83,7 +83,7 @@ module.exports = function(program) {
 	    }
 	    else if (releasedType == cfg.ETH) {
 	    	// call eth release here
-				eth(receiver, amount * Math.pow(10, 18), releasedType);
+        eth(receiver, amount * Math.pow(10, 18), releasedType);
 	    }
 	}
 }
