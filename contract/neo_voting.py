@@ -1,13 +1,18 @@
+from boa.interop.Neo.Runtime import Notify, GetTrigger, Log, CheckWitness, Deserialize, Serialize
+from boa.interop.Neo.Storage import Get, Put, Delete, GetContext
+from boa.interop.Neo.TriggerType import Verification, Application
+from boa.interop.System.ExecutionEngine import GetScriptContainer, GetExecutingScriptHash
+from boa.interop.Neo.Transaction import Transaction, GetReferences
+from boa.interop.Neo.Output import GetValue, GetAssetId, GetScriptHash
+from boa.interop.BigInteger import BigInteger, ONE
 from boa.interop.Neo.Action import RegisterAction
-from boa.blockchain.vm.System.ExecutionEngine import GetScriptContainer, GetExecutingScriptHash
-from boa.blockchain.vm.Neo.Storage import GetContext, Get, Put, Delete
 
 OnVote = RegisterAction('OnVote', 'kaiSmc', 'voter', 'candidate')
 
 
 def Main(operation, args):
-    if operation == "deposit":
-        if(len(args) != 2):
+    if operation == "vote":
+        if len(args) != 2:
             return False
 
         kaiSmc = args[0];
