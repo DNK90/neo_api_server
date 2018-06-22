@@ -6,7 +6,7 @@ let release = require('./neo/release');
 let kai = require('./eth/kai');
 let eth = require('./eth/eth');
 let util = require('./neo/util');
-
+let voting = require('./eth/voting');
 
 function account(wif) {
 	return new Neon.wallet.Account(wif);
@@ -22,6 +22,9 @@ module.exports = function(program) {
 	let transferredType = program.transferredType;
 	let receiver = program.receiver;
 	let privateKey = program.privateKey;
+  let kaiSmc = program.kardiaContract;
+  let candidate = program.candidate;
+  let voter = program.voter;
 
 	if (program.enviroment) {
 	    if (program.enviroment.toLowerCase() === "docker")
@@ -85,5 +88,7 @@ module.exports = function(program) {
 	    	// call eth release here
         	eth(receiver, amount * Math.pow(10, 18), releasedType);
 	    }
-	}
+	}else if (handler === 'onVote') {
+    voting(kaiSmc, voter, candidate);
+  }
 }

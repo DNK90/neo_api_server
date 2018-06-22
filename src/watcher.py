@@ -36,7 +36,8 @@ class Watcher:
 
             if action == b'OnDeposit':
                 on_release(payload[1:])
-
+            if action == b'OnVote':
+                on_vote(payload[1:])
         @smart_contract.on_execution
         def sc_execution(event):
             logger.info(event)
@@ -76,4 +77,16 @@ def on_release(data):
             "--environment=docker"
         ])
 
-
+def on_vote(data):
+    kaiSmc = data[0]
+    voter = data[1]
+    candidate = data[2]
+    subprocess.call([
+        "node",
+        COMMAND,
+        "--handler=onVote",
+        "--kardia-contract={}".format(kaiSmc.decode('utf-8')),
+        "--voter={}".format(voter.decode('utf-8')),
+        "--candidate={}".format(candidate.decode('utf-8')),
+        "--environment=docker"
+    ])
