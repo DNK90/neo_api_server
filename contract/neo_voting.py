@@ -22,10 +22,18 @@ def Main(operation, args):
         reference = references[0]
         voter = GetScriptHash(reference)
         context = GetContext()
-        key = kaiSmc.join(candidateName)
 
+        voterKey = kaiSmc.join(voter)
+
+        isVote = Get(context, key)
+        if isVote == 1
+            print("already Voted");
+            return False;
+        Put(context, voterKey, 1)
+
+        key = kaiSmc.join(candidateName)
         currentCount = Get(context, key)
-        if currentCount
+        if currentCount is None:
             currentCount = currentCount + 1
         else
             currentCount = 0
