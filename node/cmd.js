@@ -13,14 +13,17 @@ function number(val) {
 
 
 program
-	.version('0.1.0')
-	.option('-h, --handler <type>', 'handler: updateRate | getRate | deposit | release')
+	.version('0.1.1')
+	.option('-h, --handler <type>', 'handler: updateRate | getRate | deposit | release | onVote')
 	.option('-rt, --released-type <type>', 'type which is released to, required if handler is deposit, release or updateRate')
 	.option('-a, --amount <type>', 'amount of released type or transfered type', number)
 	.option('-t, --transferred-type <type>', 'transferred type: neo or gas')
 	.option('-r, --receiver <type>', 'receiver address, required if handler is deposit or release')
 	.option('-p, --private-key <type>', 'private key')
     .option('-env, --environment <type>', 'override environment dev or docker')
+    .option('-ksmc, --kardia-contract <type>', 'Kardia smart contract for voting')
+    .option('-vt, --voter <type>', 'voter address')
+    .option('-can, --candidate <type>', 'candidate name for vote')
 	.parse(process.argv);
 
 
