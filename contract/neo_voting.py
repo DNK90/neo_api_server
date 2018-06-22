@@ -23,7 +23,7 @@ def Main(operation, args):
         voter = GetScriptHash(reference)
         context = GetContext()
 
-        voterKey = kaiSmc.join(voter)
+        voterKey = kaiSmc + voter
 
         isVote = Get(context, voterKey)
         if isVote == 1
@@ -31,7 +31,7 @@ def Main(operation, args):
             return False;
         Put(context, voterKey, 1)
 
-        key = kaiSmc.join(candidateName)
+        key = kaiSmc + candidateName
         currentCount = Get(context, key)
         if currentCount is None:
             currentCount = currentCount + 1
