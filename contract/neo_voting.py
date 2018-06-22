@@ -25,7 +25,7 @@ def Main(operation, args):
 
         voterKey = kaiSmc.join(voter)
 
-        isVote = Get(context, key)
+        isVote = Get(context, voterKey)
         if isVote == 1
             print("already Voted");
             return False;
