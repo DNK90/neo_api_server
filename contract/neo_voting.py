@@ -24,21 +24,29 @@ def Main(operation, args):
         context = GetContext()
 
         voterKey = kaiSmc + voter
+        print(voterKey)
 
         isVote = Get(context, voterKey)
-        if isVote == 1
-            print("already Voted");
+        if isVote == 1:
+            print("already Voted")
             return False;
+
         Put(context, voterKey, 1)
 
         key = kaiSmc + candidateName
+        print(key)
+
         currentCount = Get(context, key)
+        print(currentCount)
+
         if currentCount is None:
             currentCount = currentCount + 1
-        else
+        else:
             currentCount = 0
+
         Put(context, key, currentCount)
-        OnVote(kaiSmc,voter,candidate)
+        OnVote(kaiSmc, voter, candidateName)
+
         return True
 
     print("nothing matches")
