@@ -24,7 +24,7 @@ RUN rm -rf /var/lib/apt/lists/*
 ARG branch=master
 
 # Clone and setup
-RUN git clone https://github.com/DNK90/neo_api_server.git
+RUN git clone https://github.com/smconnect/neo_api_server
 WORKDIR neo_api_server
 RUN git checkout $branch
 
