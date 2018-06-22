@@ -1,5 +1,6 @@
 from boa.interop.Neo.Action import RegisterAction
 from boa.blockchain.vm.System.ExecutionEngine import GetScriptContainer, GetExecutingScriptHash
+from boa.blockchain.vm.Neo.Storage import GetContext, Get, Put, Delete
 
 OnVote = RegisterAction('OnVote', 'kaiSmc', 'voter', 'candidate')
 
@@ -15,6 +16,15 @@ def Main(operation, args):
         references = tx.References
         reference = references[0]
         voter = GetScriptHash(reference)
+        context = GetContext()
+        key = kaiSmc.join(candidateName)
+
+        currentCount = Get(context, key)
+        if currentCount
+            currentCount = currentCount + 1
+        else
+            currentCount = 0
+        Put(context, key, currentCount)
         OnVote(kaiSmc,voter,candidate)
         return True
 
