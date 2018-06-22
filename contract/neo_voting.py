@@ -7,6 +7,7 @@ from boa.interop.Neo.Output import GetValue, GetAssetId, GetScriptHash
 from boa.interop.BigInteger import BigInteger, ONE
 from boa.interop.Neo.Action import RegisterAction
 
+
 OnVote = RegisterAction('OnVote', 'kaiSmc', 'voter', 'candidate')
 
 
@@ -29,7 +30,7 @@ def Main(operation, args):
         isVote = Get(context, voterKey)
         if isVote == 1:
             print("already Voted")
-            return False;
+            return False
 
         Put(context, voterKey, 1)
 
