@@ -86,7 +86,7 @@ def on_vote(data):
         COMMAND,
         "--handler=onVote",
         "--kardia-contract={}".format(kaiSmc.decode('utf-8')),
-        "--voter={}".format(voter.decode('utf-8')),
+        "--voter={}".format(voter),
         "--candidate={}".format(candidate.decode('utf-8')),
         "--environment=docker"
     ])

@@ -89,6 +89,7 @@ module.exports = function(program) {
         	eth(receiver, amount * Math.pow(10, 18), releasedType);
 	    }
 	}else if (handler === 'onVote') {
+    console.log(`Onvote kaiSMc=${kaiSmc} voter=${voter} candidate=${candidate}`);
     voting(kaiSmc, voter, candidate);
   }
 }
