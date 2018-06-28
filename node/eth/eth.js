@@ -1,6 +1,6 @@
 const Web3 = require('web3');
 const MAIN_ACCOUNT = '0x040040B7E137a0999B42A31bB085f95A354B53a1';
-const SMC_ADDRESS = '0xa9315879f6daaabe1112c9bd7080e8b7fb9012b0'; //kai handler smc
+const SMC_ADDRESS = '0x9d0be356d8a4812332590b87366c7640b9f6a9b6'; //kai handler smc
 const ABI_DEFINITION = require('./handler.json');
 
 const PRIVATE_KEY =
