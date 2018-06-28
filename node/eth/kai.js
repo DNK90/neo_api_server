@@ -1,11 +1,11 @@
 const Web3 = require('web3');
 const MAIN_ACCOUNT = '0x040040B7E137a0999B42A31bB085f95A354B53a1';
-const SMC_ADDRESS = '0xbc9cef3ed845214373fb3e5971f5c9f0352f9c94'; //ropsten
+const SMC_ADDRESS = '0xc8a41403a608e688fa9e555df6e67266a0a1bd66'; //ropsten
 const ABI_DEFINITION = require('./Master.json');
 
 const PRIVATE_KEY =
     '0xb0b8b5a8199891fe81d9b830effdd9fc50dbfa3522fa15d20c5074c99b41b3bc';
-const CHILD_SMC_ADDRESS = '0xc2e2179b99ed34b8bf94ac0065a5efe4de2e8e7d';
+const CHILD_SMC_ADDRESS = '0x1c2b4852b8655c0b0109a6b29e82ed87f0a3dfe4';
 
 const providerHTTP = 'http://35.198.245.107:8545';
 
