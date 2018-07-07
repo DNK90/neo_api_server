@@ -65,3 +65,7 @@ import contract /neo-python/api-server/contract/neo_voting.avm 0705 01 True Fals
 tx <transaction_hash>
 
 ```
+
+## 3 Output
+
+Server run successfully on specified ports and can received updates from pre-configured smart contracts on NEO private net
