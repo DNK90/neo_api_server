@@ -14,7 +14,7 @@ function number(val) {
 
 program
 	.version('0.1.1')
-	.option('-h, --handler <type>', 'handler: updateRate | getRate | deposit | release | onVote')
+	.option('-h, --handler <type>', 'handler: updateRate | getRate | deposit | release | onVote | onBet')
 	.option('-rt, --released-type <type>', 'type which is released to, required if handler is deposit, release or updateRate')
 	.option('-a, --amount <type>', 'amount of released type or transfered type', number)
 	.option('-t, --transferred-type <type>', 'transferred type: neo or gas')
@@ -24,6 +24,8 @@ program
     .option('-ksmc, --kardia-contract <type>', 'Kardia smart contract for voting')
     .option('-vt, --voter <type>', 'voter address')
     .option('-can, --candidate <type>', 'candidate name for vote')
+    .option('-betId, --betId <type>', 'Bet ID')
+    .option('-option, --option <type>', 'Selected option, used for betting case')
 	.parse(process.argv);
 
 

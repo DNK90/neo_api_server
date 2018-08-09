@@ -7,6 +7,7 @@ let kai = require('./eth/kai');
 let eth = require('./eth/eth');
 let util = require('./neo/util');
 let voting = require('./eth/voting');
+let bet = require('./neo/bet');
 
 function account(wif) {
 	return new Neon.wallet.Account(wif);
@@ -22,9 +23,11 @@ module.exports = function(program) {
 	let transferredType = program.transferredType;
 	let receiver = program.receiver;
 	let privateKey = program.privateKey;
-  let kaiSmc = program.kardiaContract;
-  let candidate = program.candidate;
-  let voter = program.voter;
+	let kaiSmc = program.kardiaContract;
+	let candidate = program.candidate;
+	let voter = program.voter;
+	let betId = program.betId;
+	let option = program.option;
 
 	if (program.enviroment) {
 	    if (program.enviroment.toLowerCase() === "docker")
@@ -84,12 +87,28 @@ module.exports = function(program) {
 	    else if (releasedType === cfg.KAI) {
 	        kai(receiver, amount * Math.pow(10, 18));
 	    }
-	    else if (releasedType == cfg.ETH) {
+	    else if (releasedType === cfg.ETH) {
 	    	// call eth release here
         	eth(receiver, amount * Math.pow(10, 18), releasedType);
 	    }
-	}else if (handler === 'onVote') {
-    console.log(`Onvote kaiSMc=${kaiSmc} voter=${voter} candidate=${candidate}`);
-    voting(kaiSmc, voter, candidate);
-  }
+	}
+	else if (handler === 'onVote') {
+		console.log(`Onvote kaiSMc=${kaiSmc} voter=${voter} candidate=${candidate}`);
+		voting(kaiSmc, voter, candidate);
+	}
+	else if (handler === "onBet") {
+  		if (privateKey === undefined)
+			throw("--private-key is required");
+
+		if (amount <= 0) {
+			throw("invalid amount");
+		}
+
+		if (betId === undefined || option === undefined) {
+			throw("betId and option are required");
+		}
+
+		bet(account(privateKey), betId, option, amount);
+
+	}
 }

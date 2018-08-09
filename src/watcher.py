@@ -38,6 +38,9 @@ class Watcher:
                 on_release(payload[1:])
             if action == b'OnVote':
                 on_vote(payload[1:])
+            if action == b'OnBet':
+                on_bet(payload[1:])
+
         @smart_contract.on_execution
         def sc_execution(event):
             logger.info(event)
@@ -77,6 +80,7 @@ def on_release(data):
             "--environment=docker"
         ])
 
+
 def on_vote(data):
     kaiSmc = data[0]
     voter = data[1]
@@ -90,3 +94,11 @@ def on_vote(data):
         "--candidate={}".format(candidate.decode('utf-8')),
         "--environment=docker"
     ])
+
+
+def on_bet(data):
+    # catch OnBet event
+    from_address, bet_id, option, amount = data
+    logger.info("OnBet - from:{} - ID:{} - option:{} - amount:{} NEO".format(
+        from_address, bet_id, option, amount
+    ))
