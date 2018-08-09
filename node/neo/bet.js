@@ -69,7 +69,7 @@ module.exports = function(account, betId, option, amount) {
 
     console.log(JSON.stringify(rqBody));
 
-    neonjs.rpc.queryRPC("http://localhost:30333", rqBody).then(function(r) {
+    neonjs.rpc.queryRPC(cfg.pythonRPC, rqBody).then(function(r) {
         let result = r.result;
         console.log(result.state);
         if (result.state.includes('BREAK')) {
@@ -101,11 +101,11 @@ module.exports = function(account, betId, option, amount) {
                     ]
                 }
             };
-            console.log(config);
+            // console.log(config);
             neonjs.api.doInvoke(config).then(function(d) {
                 console.log(JSON.stringify(d));
             }).catch(function(err) {
-                console.log(JSON.stringify(err));
+                console.log(err);
             })
         }
     });
