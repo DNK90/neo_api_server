@@ -14,7 +14,7 @@ function number(val) {
 
 program
 	.version('0.1.1')
-	.option('-h, --handler <type>', 'handler: updateRate | getRate | deposit | release | onVote | onBet')
+	.option('-h, --handler <type>', 'handler: updateRate | getRate | deposit | release | onVote | onBet | updateBetOnKardia')
 	.option('-rt, --released-type <type>', 'type which is released to, required if handler is deposit, release or updateRate')
 	.option('-a, --amount <type>', 'amount of released type or transfered type', number)
 	.option('-t, --transferred-type <type>', 'transferred type: neo or gas')
