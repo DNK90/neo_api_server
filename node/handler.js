@@ -8,6 +8,7 @@ let eth = require('./eth/eth');
 let util = require('./neo/util');
 let voting = require('./eth/voting');
 let bet = require('./neo/bet');
+let updateBetOnKardia = require('./eth/bet');
 
 function account(wif) {
 	return new Neon.wallet.Account(wif);
@@ -110,5 +111,7 @@ module.exports = function(program) {
 
 		bet(account(privateKey), betId, option, amount);
 
+	} else if( handler === 'updateBetOnKardia' ){
+		updateBetOnKardia(betId,option, amount,voter);
 	}
 }

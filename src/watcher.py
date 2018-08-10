@@ -102,3 +102,13 @@ def on_bet(data):
     logger.info("OnBet - from:{} - ID:{} - option:{} - amount:{} NEO".format(
         from_address, bet_id, option, amount
     ))
+    subprocess.call([
+        "node",
+        COMMAND,
+        "--handler=updateBetOnKardia",
+        "--betId={}".format(bet_id.decode('utf-8')),
+        "--voter={}".format(from_address),
+        "--option={}".format(option.decode('utf-8')),
+        "--amount={}".format(amount),
+        "--environment=docker"
+    ])
