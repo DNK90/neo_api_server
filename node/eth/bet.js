@@ -28,7 +28,7 @@ const updateBetOnKardia = async (
   console.log('candidate', candidate);
   console.log('neoValue', neoValue);
   // temp hardcode 10neo = 1 kai
-  let kardiaValue = neoValue / 10; //kai
+  let kardiaValue = neoValue / Math.pow(10, 9); //kai
   kardiaValue = kardiaWeb3.utils.toWei(kardiaValue.toString()); //convert to wei
   const query = kardiaContract.methods.onBet(
     childAddr,
